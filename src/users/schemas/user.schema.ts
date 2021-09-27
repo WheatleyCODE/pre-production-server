@@ -13,7 +13,6 @@ export class User {
 
   @ApiProperty({ example: 'user@mail.ru', description: 'Email' })
   @Prop({
-    type: String,
     required: true,
     unique: true,
   })
