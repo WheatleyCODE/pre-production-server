@@ -1,3 +1,5 @@
+import { UpproveUser } from './dto/upprove-user.dto';
+import { BanUserDto } from './dto/ban-user.dto';
 import { RolesGuard } from './../auth/roles.guard';
 import { JwtAuthGuard } from './../auth/jwt-auth.guard';
 import { User, UserDocument } from './schemas/user.schema';
@@ -14,6 +16,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/roles.auth.decorator';
+import { AddRoleDto } from './dto/add-role.dto';
 
 @ApiTags('Users')
 @Controller('/api/users')
@@ -29,11 +32,39 @@ export class UsersController {
   getUsers(): Promise<UserDocument[]> {
     return this.usersService.getAll();
   }
+
   @ApiOperation({ summary: 'Create user' })
   @ApiResponse({ status: 200, type: User })
   @Post('/create')
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createUser: CreateUserDto): Promise<User> {
     return this.usersService.createUser(createUser);
+  }
+
+  @ApiOperation({ summary: 'Get role' })
+  @ApiResponse({ status: 200 })
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
+  @Post('/role')
+  addRole(@Body() addRoleDto: AddRoleDto) {
+    return this.usersService.addRole(addRoleDto);
+  }
+
+  @ApiOperation({ summary: 'Ban user' })
+  @ApiResponse({ status: 200 })
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
+  @Post('/ban')
+  banUser(@Body() banUserDto: BanUserDto) {
+    return this.usersService.banUser(banUserDto);
+  }
+
+  @ApiOperation({ summary: 'Upprove user' })
+  @ApiResponse({ status: 200 })
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
+  @Post('/upprove')
+  upproveUser(@Body() upproveUser: UpproveUser) {
+    return this.usersService.upproveUser(upproveUser);
   }
 }
