@@ -12,9 +12,14 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
-  async create(userDto: CreateUserDto): Promise<User> {
+  async createUser(userDto: CreateUserDto): Promise<User> {
     const newUser = new this.userModel(userDto);
 
     return newUser.save();
+  }
+
+  async getUserByEmail(email: string) {
+    const user = this.userModel.findOne({ email });
+    return user;
   }
 }

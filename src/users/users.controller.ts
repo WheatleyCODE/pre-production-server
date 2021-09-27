@@ -27,6 +27,6 @@ export class UsersController {
   @Post('/create')
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createUser: CreateUserDto): Promise<User> {
-    return this.usersService.create(createUser);
+    return this.usersService.createUser(createUser);
   }
 }
