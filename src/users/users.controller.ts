@@ -29,19 +29,20 @@ export class UsersController {
   @ApiResponse({ status: 200, type: [User] })
   @Roles('ADMIN')
   @UseGuards(RolesGuard)
+  @HttpCode(HttpStatus.OK)
   @Get('/')
   getUsers(): Promise<UserDocument[]> {
     return this.usersService.getAll();
   }
 
-  @ApiOperation({ summary: 'Create user' })
-  @ApiResponse({ status: 200, type: User })
-  @UsePipes(ValidationPipe)
-  @Post('/create')
-  @HttpCode(HttpStatus.CREATED)
-  create(@Body() createUser: CreateUserDto): Promise<User> {
-    return this.usersService.createUser(createUser);
-  }
+  // @ApiOperation({ summary: 'Create user' })
+  // @ApiResponse({ status: 200, type: User })
+  // @UsePipes(ValidationPipe)
+  // @Post('/create')
+  // @HttpCode(HttpStatus.CREATED)
+  // create(@Body() createUser: CreateUserDto): Promise<User> {
+  //   return this.usersService.createUser(createUser);
+  // }
 
   @ApiOperation({ summary: 'Get role' })
   @ApiResponse({ status: 200 })

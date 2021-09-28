@@ -1,7 +1,7 @@
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './../users/dto/create-user.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Get } from '@nestjs/common';
 
 @ApiTags('Autorization')
 @Controller('/auth')
@@ -15,5 +15,20 @@ export class AuthController {
   @Post('/registration')
   registration(@Body() userDto: CreateUserDto) {
     return this.authService.registration(userDto);
+  }
+
+  @Post('/logout')
+  logout() {
+    return this.authService.logout();
+  }
+
+  @Get('/activate/:link')
+  activateAccount() {
+    return this.authService.activateAccount();
+  }
+
+  @Get('/refresh')
+  refreshToken() {
+    return this.authService.refreshToken();
   }
 }

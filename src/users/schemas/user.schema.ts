@@ -13,10 +13,23 @@ export class User {
 
   @ApiProperty({ example: 'user@mail.ru', description: 'Email' })
   @Prop({
+    type: String,
     required: true,
     unique: true,
   })
   email: string;
+
+  // *
+  @Prop({
+    type: Boolean,
+    default: false,
+  })
+  isActivated: boolean;
+  @Prop({
+    type: String,
+  })
+  activationLink: string;
+  // *
 
   @ApiProperty({ example: '123456', description: 'Password' })
   @Prop({
@@ -26,25 +39,38 @@ export class User {
   password: string;
 
   // ! Сделать апи
-  @Prop()
+  @Prop({
+    type: String,
+  })
   resetToken: string;
-  @Prop()
+  @Prop({
+    type: Date,
+  })
   resetTokenExp: Date;
 
   @ApiProperty({ example: 'Vasya', description: 'FirstName' })
-  @Prop()
+  @Prop({
+    type: String,
+  })
   firstName: string;
 
   @ApiProperty({ example: 'Pupkin', description: 'LastName' })
-  @Prop()
+  @Prop({
+    type: String,
+  })
   lastName: string;
 
   @ApiProperty({ example: false, description: 'User banned? y/n' })
-  @Prop({ default: false })
+  @Prop({
+    type: Boolean,
+    default: false,
+  })
   banned: boolean;
 
   @ApiProperty({ example: 'Very hot', description: 'Reason banned' })
-  @Prop()
+  @Prop({
+    type: String,
+  })
   banReason: string;
 
   // ! Сделать апи
@@ -61,6 +87,7 @@ export class User {
   })
   @Prop({
     default: 'USER',
+    type: String,
   })
   role: string;
 }

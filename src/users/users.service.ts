@@ -7,6 +7,12 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
+interface ICreateUser {
+  email: string;
+  password: string;
+  activationLink: string;
+}
+
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
@@ -15,10 +21,9 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
-  async createUser(userDto: CreateUserDto): Promise<UserDocument> {
-    const newUser = new this.userModel(userDto);
-
-    return newUser.save();
+  async createUser(userDto: ICreateUser): Promise<UserDocument> {
+    const newUser = this.userModel.create(userDto);
+    return newUser;
   }
 
   async getUserByEmail(email: string) {

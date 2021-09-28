@@ -1,3 +1,4 @@
+import { MailModule } from './../mail/mail.module';
 import { UsersModule } from './../users/users.module';
 import { forwardRef, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
@@ -15,6 +16,7 @@ import { JwtModule } from '@nestjs/jwt';
         expiresIn: '1h',
       },
     }),
+    MailModule,
   ],
   exports: [AuthService, JwtModule],
 })

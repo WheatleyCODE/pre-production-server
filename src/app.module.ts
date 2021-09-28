@@ -9,6 +9,8 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
 import { FilesModule } from './files/files.module';
+import { TokenModule } from './token/token.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   controllers: [AppController],
@@ -25,6 +27,8 @@ import { FilesModule } from './files/files.module';
     AuthModule,
     PostsModule,
     FilesModule,
+    TokenModule,
+    MailModule,
   ],
 })
 export class AppModule {}

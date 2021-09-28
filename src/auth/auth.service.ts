@@ -1,3 +1,4 @@
+import { MailService } from './../mail/mail.service';
 import { User, UserDocument } from './../users/schemas/user.schema';
 import {
   Injectable,
@@ -7,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
+import * as uuid from 'uuid';
 import { UsersService } from './../users/users.service';
 import { CreateUserDto } from './../users/dto/create-user.dto';
 
@@ -14,6 +16,7 @@ import { CreateUserDto } from './../users/dto/create-user.dto';
 export class AuthService {
   constructor(
     private usersService: UsersService,
+    private mailService: MailService,
     private jwtService: JwtService,
   ) {}
   async login(userDto: CreateUserDto) {
@@ -24,16 +27,35 @@ export class AuthService {
   async registration({ email, password }: CreateUserDto) {
     const candidate = await this.usersService.getUserByEmail(email);
     if (candidate) {
-      throw new HttpException('User already exist', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Пользователь с таким Email уже сущетсвует',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const hashPassword = await bcrypt.hash(password, 8);
+    // ! Можно использовать захешированный пароль для создания ссылки активации
+    const activationLink = uuid.v4();
     const user = await this.usersService.createUser({
       email,
       password: hashPassword,
+      activationLink,
     });
+    await this.mailService.sendActivationMail(email, activationLink);
 
     return this.generateToken(user);
+  }
+
+  async logout() {
+    return null;
+  }
+
+  async refreshToken() {
+    return null;
+  }
+
+  async activateAccount() {
+    return null;
   }
 
   private async generateToken({ email, _id, role }: UserDocument) {
