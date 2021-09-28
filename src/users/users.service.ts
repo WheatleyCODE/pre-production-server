@@ -15,7 +15,7 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
-  async createUser(userDto: CreateUserDto): Promise<User> {
+  async createUser(userDto: CreateUserDto): Promise<UserDocument> {
     const newUser = new this.userModel(userDto);
 
     return newUser.save();

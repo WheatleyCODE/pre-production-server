@@ -52,6 +52,8 @@ export class User {
   events: [];
   @Prop({ default: [] }) // ! Подписки на евенты (для пользователей)
   subscribe: [];
+  @Prop({ default: [] }) // ! Посты пользователя (Возможно и не нужно)
+  posts: [];
 
   @ApiProperty({
     example: 'user',

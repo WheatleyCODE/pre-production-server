@@ -1,4 +1,4 @@
-import { User } from './../users/schemas/user.schema';
+import { User, UserDocument } from './../users/schemas/user.schema';
 import {
   Injectable,
   HttpStatus,
@@ -28,7 +28,6 @@ export class AuthService {
     }
 
     const hashPassword = await bcrypt.hash(password, 8);
-    console.log('end');
     const user = await this.usersService.createUser({
       email,
       password: hashPassword,
@@ -37,8 +36,8 @@ export class AuthService {
     return this.generateToken(user);
   }
 
-  private async generateToken({ email, id, role }: User) {
-    const payload = { email, id, role };
+  private async generateToken({ email, _id, role }: UserDocument) {
+    const payload = { email, _id, role };
     return {
       token: this.jwtService.sign(payload),
     };
