@@ -31,6 +31,11 @@ export class UsersService {
     return user;
   }
 
+  async getUserByActivationLink(activationLink: string): Promise<UserDocument> {
+    const user = this.userModel.findOne({ activationLink });
+    return user;
+  }
+
   async addRole({ value, userId }: AddRoleDto) {
     const user = await this.userModel.findById(userId);
     if (user) {

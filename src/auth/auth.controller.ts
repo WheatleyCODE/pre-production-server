@@ -1,7 +1,17 @@
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './../users/dto/create-user.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { Body, Controller, Post, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  Req,
+  Res,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
+import { Request, Response } from 'express';
 
 @ApiTags('Autorization')
 @Controller('/auth')
@@ -23,8 +33,18 @@ export class AuthController {
   }
 
   @Get('/activate/:link')
-  activateAccount() {
-    return this.authService.activateAccount();
+  activateAccount(@Req() req: Request, @Res() res: Response) {
+    try {
+      const activationLink = req.params.link;
+      this.authService.activateAccount(activationLink);
+      return res.redirect(process.env.API_URL);
+    } catch (e) {
+      console.log(e);
+      throw new HttpException(
+        'Нужнон ли тут блок трайкетч?',
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   @Get('/refresh')

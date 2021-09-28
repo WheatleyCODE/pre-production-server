@@ -41,7 +41,10 @@ export class AuthService {
       password: hashPassword,
       activationLink,
     });
-    await this.mailService.sendActivationMail(email, activationLink);
+    this.mailService.sendActivationMail(
+      email,
+      `${process.env.API_URL}/auth/activate/${activationLink}`,
+    );
 
     return this.generateToken(user);
   }
@@ -54,8 +57,14 @@ export class AuthService {
     return null;
   }
 
-  async activateAccount() {
-    return null;
+  async activateAccount(link: string) {
+    const user = await this.usersService.getUserByActivationLink(link);
+    if (!user) {
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+    }
+
+    user.isActivated = true;
+    await user.save();
   }
 
   private generateToken({ email, _id, role }: UserDocument) {
