@@ -1,3 +1,4 @@
+import { FilesModule } from './../files/files.module';
 import { AuthModule } from './../auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PostSchema, Post } from './schemas/post.schema';
@@ -11,6 +12,7 @@ import { PostsController } from './posts.controller';
   imports: [
     MongooseModule.forFeature([{ name: Post.name, schema: PostSchema }]),
     AuthModule,
+    FilesModule,
   ],
 })
 export class PostsModule {}

@@ -13,8 +13,10 @@ import {
   UseGuards,
   Req,
   UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ValidationPipe } from '../pipes/validation.pipe';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('/posts')
 export class PostsController {
@@ -26,7 +28,12 @@ export class PostsController {
   @UsePipes(ValidationPipe)
   @Post('/create')
   @HttpCode(HttpStatus.CREATED)
-  create(@Req() req: Request, @Body() createPostDto: CreatePostDto): any {
-    return this.postsService.createPost(req, createPostDto);
+  @UseInterceptors(FileInterceptor('image'))
+  create(
+    @Req() req: Request,
+    @Body() createPostDto: CreatePostDto,
+    @UploadedFile() image,
+  ): any {
+    return this.postsService.createPost(req, createPostDto, image);
   }
 }
