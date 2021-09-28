@@ -9,7 +9,6 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
 import { FilesModule } from './files/files.module';
-import { TokenModule } from './token/token.module';
 import { MailModule } from './mail/mail.module';
 
 @Module({
@@ -27,7 +26,6 @@ import { MailModule } from './mail/mail.module';
     AuthModule,
     PostsModule,
     FilesModule,
-    TokenModule,
     MailModule,
   ],
 })

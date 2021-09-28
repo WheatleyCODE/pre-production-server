@@ -58,10 +58,10 @@ export class AuthService {
     return null;
   }
 
-  private async generateToken({ email, _id, role }: UserDocument) {
+  private generateToken({ email, _id, role }: UserDocument) {
     const payload = { email, _id, role };
     return {
-      token: this.jwtService.sign(payload),
+      accesstoken: this.jwtService.sign(payload),
     };
   }
 
