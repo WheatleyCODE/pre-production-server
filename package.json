@@ -30,6 +30,8 @@
     "@nestjs/swagger": "^5.0.9",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
+    "class-transformer": "^0.4.0",
+    "class-validator": "^0.13.1",
     "cross-env": "^7.0.3",
     "mongoose": "^5.2.8",
     "reflect-metadata": "^0.1.13",
