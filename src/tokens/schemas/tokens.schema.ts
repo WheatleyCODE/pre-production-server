@@ -25,4 +25,4 @@ export class Tokens {
   userId: User;
 }
 
-export const UserSchema = SchemaFactory.createForClass(Tokens);
+export const TokensSchema = SchemaFactory.createForClass(Tokens);
