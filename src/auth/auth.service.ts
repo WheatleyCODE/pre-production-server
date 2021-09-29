@@ -68,8 +68,23 @@ export class AuthService {
     return token;
   }
 
-  async refreshToken() {
-    return null;
+  async refreshAuth(refreshToken: string) {
+    if (!refreshToken) {
+      throw new UnauthorizedException({ message: 'Некорректный токен' });
+    }
+
+    const tokenData = await this.tokensService.validateRefreshTokenToken(
+      refreshToken,
+    );
+
+    if (tokenData === false) {
+      throw new UnauthorizedException({ message: 'Нет авторизации' });
+    }
+
+    const user = await this.usersService.getUserByEmail(
+      tokenData.userData.email,
+    );
+    return await this.tokensService.generateTokens(user);
   }
 
   async activateAccount(link: string) {

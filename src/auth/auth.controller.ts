@@ -10,8 +10,10 @@ import {
   Res,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @ApiTags('Autorization')
 @Controller('/auth')
@@ -47,8 +49,15 @@ export class AuthController {
     return res.redirect(process.env.API_URL);
   }
 
+  // @UseGuards(JwtAuthGuard)
   @Get('/refresh')
-  refreshToken() {
-    return this.authService.refreshToken();
+  async refreshToken(@Req() req: Request, @Res() res: Response) {
+    const { refreshToken } = req.cookies;
+    const userData = await this.authService.refreshAuth(refreshToken);
+    res.cookie('refreshToken', userData.refreshToken, {
+      maxAge: 14 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+    });
+    return res.json(userData);
   }
 }

@@ -65,4 +65,24 @@ export class TokensService {
       console.log(e);
     }
   }
+
+  async validateRefreshTokenToken(token: string) {
+    try {
+      const userData = this.verifyRefreshToken(token);
+      const refreshTokenData = await this.tokensModel.findOne({
+        refreshToken: token,
+      });
+
+      if (!userData || !refreshTokenData) {
+        return false;
+      }
+
+      return {
+        userData,
+        refreshTokenData,
+      };
+    } catch (e) {
+      return false;
+    }
+  }
 }
