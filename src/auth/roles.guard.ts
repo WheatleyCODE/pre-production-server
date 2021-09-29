@@ -51,10 +51,9 @@ export class RolesGuard implements CanActivate {
       }
 
       req.user = user;
-
       return user.role === requiredRoles;
     } catch (e) {
-      throw new HttpException('Нет прав', HttpStatus.FORBIDDEN);
+      throw new HttpException('Нет прав или авторизации', HttpStatus.FORBIDDEN);
     }
   }
 }
