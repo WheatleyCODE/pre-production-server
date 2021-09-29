@@ -6,19 +6,23 @@ import { ValidationException } from 'src/exceptions/validation.exception';
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
   async transform(value: any, metadata: ArgumentMetadata): Promise<any> {
-    const obj = plainToClass(metadata.metatype, value);
-    const errors = await validate(obj);
+    try {
+      const obj = plainToClass(metadata.metatype, value);
+      const errors = await validate(obj);
 
-    if (errors.length) {
-      const message = errors.map((error) => {
-        return `${error.property} - ${Object.values(error.constraints).join(
-          ', ',
-        )}`;
-      });
-      console.log(errors);
-      throw new ValidationException(message);
+      if (errors.length) {
+        const message = errors.map((error) => {
+          return `${error.property} - ${Object.values(error.constraints).join(
+            ', ',
+          )}`;
+        });
+        console.log(errors);
+        throw new ValidationException(message);
+      }
+
+      return value;
+    } catch (e) {
+      throw new ValidationException({ message: 'Ошибка валидации' });
     }
-
-    return value;
   }
 }

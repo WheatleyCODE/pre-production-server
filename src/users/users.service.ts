@@ -37,37 +37,47 @@ export class UsersService {
   }
 
   async addRole({ value, userId }: AddRoleDto) {
-    const user = await this.userModel.findById(userId);
-    if (user) {
-      user.role = value;
-      await user.save();
-      return user;
+    try {
+      const user = await this.userModel.findById(userId);
+      if (user) {
+        user.role = value;
+        await user.save();
+        return user;
+      }
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+    } catch (e) {
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
     }
-
-    throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
   }
 
   async banUser({ reason, userId }: BanUserDto) {
-    const user = await this.userModel.findById(userId);
-    if (user) {
-      user.banned = true;
-      user.banReason = reason;
-      await user.save();
-      return user;
+    try {
+      const user = await this.userModel.findById(userId);
+      if (user) {
+        user.banned = true;
+        user.banReason = reason;
+        await user.save();
+        return user;
+      }
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+    } catch (e) {
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
     }
-
-    throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
   }
 
   async upproveUser({ userId }: UpproveUser) {
-    const user = await this.userModel.findById(userId);
-    if (user) {
-      user.banned = false;
-      user.banReason = null;
-      await user.save();
-      return user;
-    }
+    try {
+      const user = await this.userModel.findById(userId);
+      if (user) {
+        user.banned = false;
+        user.banReason = null;
+        await user.save();
+        return user;
+      }
 
-    throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+    } catch (e) {
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+    }
   }
 }

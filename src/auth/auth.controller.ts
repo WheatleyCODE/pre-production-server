@@ -34,17 +34,9 @@ export class AuthController {
 
   @Get('/activate/:link')
   activateAccount(@Req() req: Request, @Res() res: Response) {
-    try {
-      const activationLink = req.params.link;
-      this.authService.activateAccount(activationLink);
-      return res.redirect(process.env.API_URL);
-    } catch (e) {
-      console.log(e);
-      throw new HttpException(
-        'Нужнон ли тут блок трайкетч?',
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    const activationLink = req.params.link;
+    this.authService.activateAccount(activationLink);
+    return res.redirect(process.env.API_URL);
   }
 
   @Get('/refresh')
