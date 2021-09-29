@@ -33,8 +33,11 @@ export class AuthController {
   }
 
   @Post('/logout')
-  logout() {
-    return this.authService.logout();
+  logout(@Req() req: Request, @Res() res: Response) {
+    const { refreshToken } = req.cookies;
+    const token = this.authService.logout(refreshToken);
+    res.clearCookie('refreshToken');
+    return res.json(token);
   }
 
   @Get('/activate/:link')

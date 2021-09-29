@@ -25,7 +25,7 @@ export class AuthService {
       return await this.tokensService.generateTokens(user);
     } catch (e) {
       throw new HttpException(
-        { message: 'Ошибка при логине' },
+        { message: 'Некорректный Логин или Пароль' },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
@@ -63,8 +63,9 @@ export class AuthService {
     }
   }
 
-  async logout() {
-    return null;
+  async logout(refreshToken: string) {
+    const token = await this.tokensService.removeTokens(refreshToken);
+    return token;
   }
 
   async refreshToken() {
@@ -83,9 +84,9 @@ export class AuthService {
     } catch (e) {
       throw new HttpException(
         {
-          message: 'Ошибка при активации аккаунта!',
+          message: 'Пользователь не найден',
         },
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        HttpStatus.NOT_FOUND,
       );
     }
   }
@@ -98,11 +99,11 @@ export class AuthService {
         return user;
       }
       throw new UnauthorizedException({
-        message: 'Uncorrect Email or Password',
+        message: 'Некоректный логин или пароль',
       });
     } catch (e) {
       throw new UnauthorizedException({
-        message: 'Ошибка при получении пользователя',
+        message: 'Некоректный логин или пароль',
       });
     }
   }

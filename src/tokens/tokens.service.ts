@@ -39,6 +39,11 @@ export class TokensService {
     };
   }
 
+  async removeTokens(refreshToken: string) {
+    const tokenData = this.tokensModel.deleteOne({ refreshToken });
+    return tokenData;
+  }
+
   private async saveTokens(userId, accessToken: string, refreshToken: string) {
     try {
       const tokensData = await this.tokensModel.findOne({ userId });
