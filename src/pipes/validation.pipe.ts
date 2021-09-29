@@ -22,6 +22,7 @@ export class ValidationPipe implements PipeTransform<any> {
 
       return value;
     } catch (e) {
+      console.log(e);
       throw new ValidationException({ message: 'Ошибка валидации' });
     }
   }

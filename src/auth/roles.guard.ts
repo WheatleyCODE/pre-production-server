@@ -43,9 +43,14 @@ export class RolesGuard implements CanActivate {
       }
 
       const user = this.tokensService.verifyAccessToken(token);
+
+      if (!user.isActivated) {
+        throw new UnauthorizedException({
+          message: 'Аккаунт не активирован',
+        });
+      }
+
       req.user = user;
-      console.log(user);
-      console.log(requiredRoles);
 
       return user.role === requiredRoles;
     } catch (e) {

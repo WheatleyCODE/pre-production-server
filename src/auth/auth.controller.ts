@@ -18,8 +18,13 @@ import { Request, Response } from 'express';
 export class AuthController {
   constructor(private authService: AuthService) {}
   @Post('/login')
-  login(@Body() userDto: CreateUserDto) {
-    return this.authService.login(userDto);
+  async login(@Body() userDto: CreateUserDto, @Res() res: Response) {
+    const userData = await this.authService.login(userDto);
+    res.cookie('refreshToken', userData.refreshToken, {
+      maxAge: 14 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+    });
+    return res.json(userData);
   }
 
   @Post('/registration')
