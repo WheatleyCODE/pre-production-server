@@ -8,4 +8,12 @@ export class TokensService {
     private refreshToken: RefreshTokensService,
     private accessTokenService: AccessTokenService,
   ) {}
+
+  verifyAccessToken(token: string) {
+    return this.accessTokenService.verify(token);
+  }
+
+  verifyRefreshToken(token: string) {
+    return this.refreshToken.verify(token);
+  }
 }
