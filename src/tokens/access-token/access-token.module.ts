@@ -12,6 +12,6 @@ import { AccessTokenService } from './access-token.service';
       },
     }),
   ],
-  exports: [AccessTokenService],
+  exports: [AccessTokenService, JwtModule],
 })
 export class AccessTokenModule {}

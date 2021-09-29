@@ -6,5 +6,6 @@ import { TokensService } from './tokens.service';
 @Module({
   providers: [TokensService],
   imports: [AccessTokenModule, RefreshTokenModule],
+  exports: [TokensService, AccessTokenModule, RefreshTokenModule],
 })
 export class TokensModule {}

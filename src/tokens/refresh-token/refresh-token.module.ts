@@ -12,6 +12,6 @@ import { RefreshTokensService } from './refresh-token.service';
       },
     }),
   ],
-  exports: [RefreshTokensService],
+  exports: [RefreshTokensService, JwtModule],
 })
 export class RefreshTokenModule {}
