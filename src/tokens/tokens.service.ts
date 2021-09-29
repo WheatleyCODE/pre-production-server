@@ -22,8 +22,8 @@ export class TokensService {
     return this.refreshToken.verify(token);
   }
 
-  async generateTokens({ email, _id, role }: UserDocument) {
-    const payload = { email, _id, role };
+  async generateTokens({ email, _id, role, isActivated }: UserDocument) {
+    const payload = { email, _id, role, isActivated };
     const accessToken = this.accessTokenService.generateToken(payload);
     const refreshToken = this.refreshToken.generateToken({
       ...payload,
