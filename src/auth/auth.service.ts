@@ -1,3 +1,4 @@
+import { TokensService } from './../tokens/tokens.service';
 import { MailService } from './../mail/mail.service';
 import { User, UserDocument } from './../users/schemas/user.schema';
 import {
@@ -6,7 +7,6 @@ import {
   HttpException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import * as uuid from 'uuid';
 import { UsersService } from './../users/users.service';
@@ -17,11 +17,11 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private mailService: MailService,
-    private jwtService: JwtService,
+    private tokensService: TokensService,
   ) {}
   async login(userDto: CreateUserDto) {
     const user = await this.validateUser(userDto);
-    return await this.generateToken(user);
+    return await this.tokensService.generateTokens(user);
   }
 
   async registration({ email, password }: CreateUserDto) {
@@ -46,7 +46,7 @@ export class AuthService {
       `${process.env.API_URL}/auth/activate/${activationLink}`,
     );
 
-    return this.generateToken(user);
+    return this.tokensService.generateTokens(user);
   }
 
   async logout() {
@@ -65,13 +65,6 @@ export class AuthService {
 
     user.isActivated = true;
     await user.save();
-  }
-
-  private generateToken({ email, _id, role }: UserDocument) {
-    const payload = { email, _id, role };
-    return {
-      accesstoken: this.jwtService.sign(payload),
-    };
   }
 
   private async validateUser({ email, password }: CreateUserDto) {

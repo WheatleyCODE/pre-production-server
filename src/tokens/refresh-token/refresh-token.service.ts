@@ -8,4 +8,8 @@ export class RefreshTokensService {
   verify(token: string) {
     return this.jwtService.verify(token);
   }
+
+  generateToken(payload: any) {
+    return this.jwtService.sign(payload);
+  }
 }

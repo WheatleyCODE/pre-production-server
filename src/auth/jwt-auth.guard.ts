@@ -1,3 +1,4 @@
+import { TokensService } from './../tokens/tokens.service';
 import { JwtService } from '@nestjs/jwt';
 import {
   CanActivate,
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(private tokensService: TokensService) {}
 
   canActivate(
     context: ExecutionContext,
@@ -26,7 +27,7 @@ export class JwtAuthGuard implements CanActivate {
         });
       }
 
-      const user = this.jwtService.verify(token);
+      const user = this.tokensService.verifyAccessToken(token);
       req.user = user;
       return true;
     } catch (e) {

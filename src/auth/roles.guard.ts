@@ -1,3 +1,4 @@
+import { TokensService } from './../tokens/tokens.service';
 import { ROLES_KEY } from './roles.auth.decorator';
 import { JwtService } from '@nestjs/jwt';
 import {
@@ -13,7 +14,10 @@ import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private jwtService: JwtService, private reflector: Reflector) {}
+  constructor(
+    private tokensService: TokensService,
+    private reflector: Reflector,
+  ) {}
 
   canActivate(
     context: ExecutionContext,
@@ -38,7 +42,7 @@ export class RolesGuard implements CanActivate {
         });
       }
 
-      const user = this.jwtService.verify(token);
+      const user = this.tokensService.verifyAccessToken(token);
       req.user = user;
       console.log(user);
       console.log(requiredRoles);
