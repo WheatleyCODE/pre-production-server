@@ -46,7 +46,7 @@ export class AuthController {
   activateAccount(@Req() req: Request, @Res() res: Response) {
     const activationLink = req.params.link;
     this.authService.activateAccount(activationLink);
-    return res.redirect(process.env.API_URL);
+    return res.redirect(process.env.API_CLIENT);
   }
 
   // @UseGuards(JwtAuthGuard)
