@@ -7,6 +7,7 @@ import {
   Controller,
   HttpCode,
   Post,
+  Get,
   UsePipes,
   HttpStatus,
   Body,
@@ -35,5 +36,12 @@ export class PostsController {
     @UploadedFile() image,
   ): any {
     return this.postsService.createPost(req, createPostDto, image);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/all')
+  @HttpCode(HttpStatus.OK)
+  getAllPosts() {
+    return this.postsService.getAllPosts();
   }
 }

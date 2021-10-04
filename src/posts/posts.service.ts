@@ -35,4 +35,8 @@ export class PostsService {
       );
     }
   }
+
+  async getAllPosts(): Promise<PostDocument[]> {
+    return this.postModel.find().exec();
+  }
 }
