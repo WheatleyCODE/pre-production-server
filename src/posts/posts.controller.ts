@@ -38,7 +38,6 @@ export class PostsController {
     return this.postsService.createPost(req, createPostDto, image);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('/all')
   @HttpCode(HttpStatus.OK)
   getAllPosts() {
