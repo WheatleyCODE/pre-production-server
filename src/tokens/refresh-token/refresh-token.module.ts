@@ -8,7 +8,7 @@ import { RefreshTokensService } from './refresh-token.service';
     JwtModule.register({
       secret: process.env.PRIVATE_KEY_REFRESH || 'SECRET_REFRESH',
       signOptions: {
-        expiresIn: '20s',
+        expiresIn: '14d',
       },
     }),
   ],

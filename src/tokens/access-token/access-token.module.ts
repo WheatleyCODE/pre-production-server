@@ -8,7 +8,7 @@ import { AccessTokenService } from './access-token.service';
     JwtModule.register({
       secret: process.env.PRIVATE_KEY || 'SECRET',
       signOptions: {
-        expiresIn: '10s',
+        expiresIn: '30m',
       },
     }),
   ],
