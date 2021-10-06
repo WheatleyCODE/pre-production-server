@@ -11,6 +11,7 @@ import { PostsModule } from './posts/posts.module';
 import { FilesModule } from './files/files.module';
 import { MailModule } from './mail/mail.module';
 import { TokensModule } from './tokens/tokens.module';
+import { TrackModule } from './track/track.module';
 
 @Module({
   controllers: [AppController],
@@ -29,6 +30,7 @@ import { TokensModule } from './tokens/tokens.module';
     FilesModule,
     MailModule,
     TokensModule,
+    TrackModule,
   ],
 })
 export class AppModule {}
