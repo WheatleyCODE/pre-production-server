@@ -22,7 +22,13 @@ export class TokensService {
     return this.refreshToken.verify(token);
   }
 
-  async generateTokens({ email, _id, role, isActivated }: UserDocument) {
+  async generateTokens({
+    email,
+    _id,
+    role,
+    isActivated,
+    userName,
+  }: UserDocument) {
     const payload = { email, _id, role, isActivated };
     const accessToken = this.accessTokenService.generateToken(payload);
     const refreshToken = this.refreshToken.generateToken({
@@ -35,7 +41,7 @@ export class TokensService {
     return {
       accessToken,
       refreshToken,
-      user: payload,
+      user: { ...payload, userName },
     };
   }
 

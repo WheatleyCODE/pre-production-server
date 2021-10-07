@@ -31,7 +31,7 @@ export class AuthService {
     }
   }
 
-  async registration({ email, password }: CreateUserDto) {
+  async registration({ email, password, userName }: CreateUserDto) {
     try {
       const candidate = await this.usersService.getUserByEmail(email);
       if (candidate) {
@@ -48,6 +48,7 @@ export class AuthService {
         email,
         password: hashPassword,
         activationLink,
+        userName,
       });
       this.mailService.sendActivationMail(
         email,

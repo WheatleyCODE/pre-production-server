@@ -1,7 +1,6 @@
 import { UpproveUser } from './dto/upprove-user.dto';
 import { BanUserDto } from './dto/ban-user.dto';
 import { AddRoleDto } from './dto/add-role.dto';
-import { CreateUserDto } from './dto/create-user.dto';
 import { User, UserDocument } from './schemas/user.schema';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Model } from 'mongoose';
@@ -11,6 +10,7 @@ interface ICreateUser {
   email: string;
   password: string;
   activationLink: string;
+  userName: string;
 }
 
 @Injectable()

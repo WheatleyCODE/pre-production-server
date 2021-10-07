@@ -48,6 +48,12 @@ export class User {
   })
   resetTokenExp: Date;
 
+  @ApiProperty({ example: 'Oxxxymiron', description: 'userName' })
+  @Prop({
+    type: String,
+  })
+  userName: string;
+
   @ApiProperty({ example: 'Vasya', description: 'FirstName' })
   @Prop({
     type: String,
