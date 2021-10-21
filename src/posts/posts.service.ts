@@ -37,6 +37,6 @@ export class PostsService {
   }
 
   async getAllPosts(): Promise<PostDocument[]> {
-    return this.postModel.find().exec();
+    return this.postModel.find().populate('author').exec();
   }
 }
